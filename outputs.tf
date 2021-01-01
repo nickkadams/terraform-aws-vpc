@@ -1,18 +1,18 @@
 # Caller
 output "account_id" {
-  description = "The Account ID"
+  description = "The AWS account ID"
   value       = data.aws_caller_identity.current.account_id
 }
 
-output "caller_arn" {
-  description = "The Caller ARN"
-  value       = data.aws_caller_identity.current.arn
-}
+# output "caller_arn" {
+#  description = "The caller ARN"
+#  value       = data.aws_caller_identity.current.arn
+# }
 
-output "caller_user" {
-  description = "The Caller User"
-  value       = data.aws_caller_identity.current.user_id
-}
+# output "caller_user" {
+#  description = "The caller user"
+#  value       = data.aws_caller_identity.current.user_id
+# }
 
 # VPC
 output "vpc_id" {
@@ -43,19 +43,19 @@ output "public_subnets" {
 
 # Database
 output "rds_subnet_group" {
-  description = "RDS DB Subnet Group"
+  description = "The RDS DB subnet group"
   value       = aws_db_subnet_group.this.id
 }
 
 # ElastiCache
 output "ec_subnet_group" {
-  description = "ElastiCache Subnet Group"
+  description = "The ElastiCache subnet group"
   value       = aws_elasticache_subnet_group.this.id
 }
 
-# Security Group
+# Mgmt
 output "mgmt_security_group" {
-  description = "Management Security Group"
+  description = "The management security group"
   value       = module.sg.this_security_group_name
 }
 
@@ -67,6 +67,6 @@ output "bastion_eips" {
 
 # Domain name
 output "domain_name" {
-  description = "Route 53 domain name"
+  description = "The Route 53 domain name"
   value       = var.domain_name
 }

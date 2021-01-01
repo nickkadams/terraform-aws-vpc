@@ -1,0 +1,6 @@
+# terraform init -backend-config=backend.hcl
+terraform {
+  backend "s3" {
+    key = "us-east-1/networking/vpc/services/terraform.tfstate"
+  }
+}

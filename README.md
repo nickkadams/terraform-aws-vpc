@@ -19,6 +19,7 @@ These types of resources are created by default:
 * [Elastic IP addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
 * [Security Group](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html)
 * [Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html)
+* [Tags](https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html)
 
 ## Terraform versions
 
@@ -75,8 +76,8 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 
 ## Authors
 
-Code is maintained by [Nick Adams](https://github.com/nickkadams) with awesome modules from [these awesome contributors](https://github.com/terraform-aws-modules/terraform-aws-vpc/graphs/contributors) and linting from [Kerim Satirli](https://github.com/ksatirli/code-quality-for-terraform).
+Code is maintained by [Nick Adams](https://github.com/nickkadams) with modules from [these awesome contributors](https://github.com/terraform-aws-modules/terraform-aws-vpc/graphs/contributors). Linting best practices from [Kerim Satirli](https://github.com/ksatirli/code-quality-for-terraform).
 
 ## License
 
-Apache 2 Licensed. See LICENSE for full details.
+Apache 2 Licensed. See [LICENSE](https://github.com/nickkadams/terraform-aws-vpc/blob/main/LICENSE) for full details.

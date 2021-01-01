@@ -11,7 +11,7 @@ variable "aws_region" {
 }
 
 variable "s3_prefix" {
-  description = "S3 bucket prefix (company name?)"
+  description = "S3 bucket prefix (project or customer?)"
   type        = string
 }
 
@@ -52,7 +52,7 @@ variable "tag_proj" {
 }
 
 variable "tag_conf" {
-  default     = "public"
+  default     = "confidential"
   description = "Tag: Confidentiality"
   type        = string
 }

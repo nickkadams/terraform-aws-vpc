@@ -1,6 +1,6 @@
 # S3 and DynamoDB
 
-Terraform a S3 bucket and DynamoDB table for [Terraform State and Locking](https://www.terraform.io/docs/backends/state.html).
+Terraform a S3 bucket and DynamoDB table for [Terraform State and Locking](https://www.terraform.io/docs/backends/types/s3.html).
 
 These types of resources are created by default:
 

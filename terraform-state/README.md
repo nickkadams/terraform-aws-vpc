@@ -23,7 +23,7 @@ terraform plan
 terraform apply
 ```
 
-Note that this example may create resources which can cost money (AWS Elastic IP, AWS NAT Gateway, for example). Run `terraform destroy` when you don't need these resources.
+Note that this example may create resources which can cost money (AWS S3, AWS DynamoDB, for example). Run `terraform destroy` when you don't need these resources.
 
 ## Requirements
 

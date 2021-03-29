@@ -53,10 +53,12 @@ module "vpc" {
   default_security_group_egress  = [{}]
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
-  enable_flow_log                      = true
-  create_flow_log_cloudwatch_log_group = true
-  create_flow_log_cloudwatch_iam_role  = true
-  flow_log_max_aggregation_interval    = 60
+  # enable_flow_log                      = true
+  # create_flow_log_cloudwatch_log_group = true
+  # create_flow_log_cloudwatch_iam_role  = true
+  # flow_log_max_aggregation_interval    = 60
+  # flow_log_destination_type            = "s3"
+  # flow_log_destination_arn             = s3_bucket.this_s3_bucket_arn
 
   tags = {
     Environment     = var.tag_env
@@ -84,6 +86,10 @@ module "vpc" {
   vpc_endpoint_tags = {
     Name = lower(var.tag_name)
   }
+
+  # vpc_flow_log_tags = {
+  #   Name = lower(var.tag_name)
+  # }  
 }
 
 resource "aws_db_subnet_group" "this" {

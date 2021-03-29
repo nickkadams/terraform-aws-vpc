@@ -21,6 +21,17 @@ variable "domain_name" {
   type        = string
 }
 
+variable "s3_prefix" {
+  description = "S3 bucket prefix (project or customer?)"
+  type        = string
+}
+
+variable "kms_master_key_id" {
+  default     = "alias/aws/s3"
+  description = "KMS master key ID"
+  type        = string
+}
+
 variable "tag_name" {
   default     = "services"
   description = "Tag: Name"

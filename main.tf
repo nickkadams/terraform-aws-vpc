@@ -9,7 +9,7 @@ data "aws_caller_identity" "current" {}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 2.77.0"
+  version = "~> 2.78.0"
 
   name = lower(var.tag_name)
 
@@ -49,8 +49,8 @@ module "vpc" {
 
   # Default security group - ingress/egress rules cleared to deny all
   manage_default_security_group  = true
-  default_security_group_ingress = [{}]
-  default_security_group_egress  = [{}]
+  default_security_group_ingress = []
+  default_security_group_egress  = []
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
   # enable_flow_log                      = true

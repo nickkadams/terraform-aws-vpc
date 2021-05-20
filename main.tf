@@ -25,6 +25,9 @@ module "vpc" {
   # public_subnets  = [cidrsubnet(var.aws_network, 2, 0), cidrsubnet(var.aws_network, 2, 2)]
   # private_subnets = [cidrsubnet(var.aws_network, 2, 1), cidrsubnet(var.aws_network, 2, 3)]
 
+  # Disable public IP by default
+  map_public_ip_on_launch = false
+
   # IPv6
   enable_ipv6                     = false
   assign_ipv6_address_on_creation = false

@@ -56,7 +56,7 @@ output "ec_subnet_group" {
 # Mgmt
 output "mgmt_security_group" {
   description = "The management security group"
-  value       = module.sg.this_security_group_name
+  value       = module.sg.security_group_name
 }
 
 # EIP(s)

@@ -10,7 +10,7 @@ These types of resources are created by default:
 
 ## Terraform versions
 
-Terraform 0.15 and newer.
+Terraform 1.0 and newer.
 
 ## Usage
 
@@ -29,14 +29,14 @@ Note that this example may create resources which can cost money (AWS S3, AWS Dy
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.15 |
-| aws | >= 3.37 |
+| terraform | >= 1.0 |
+| aws | >= 3.63 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.37 |
+| aws | >= 3.63 |
 
 ## Inputs
 

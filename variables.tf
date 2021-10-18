@@ -11,7 +11,7 @@ variable "aws_region" {
 }
 
 variable "aws_network" {
-  default     = "10.0.0.0/16"
+  default     = "172.32.0.0/16"
   description = "AWS base netblock"
   type        = string
 }

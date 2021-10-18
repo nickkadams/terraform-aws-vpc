@@ -39,18 +39,17 @@ module "vpc" {
   dhcp_options_domain_name         = var.domain_name
   dhcp_options_domain_name_servers = ["AmazonProvidedDNS"]
 
+  # Default route table with 0 subnet associations
+  manage_default_route_table = true
+
+  default_route_table_tags = {
+    Name = "${lower(var.tag_name)}-default"
+  }
+
   # Default security group - ingress/egress rules cleared to deny all
   manage_default_security_group  = true
   default_security_group_ingress = []
   default_security_group_egress  = []
-
-  # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
-  # enable_flow_log                      = true
-  # create_flow_log_cloudwatch_log_group = true
-  # create_flow_log_cloudwatch_iam_role  = true
-  # flow_log_max_aggregation_interval    = 60
-  # flow_log_destination_type            = "s3"
-  # flow_log_destination_arn             = s3_bucket.this_s3_bucket_arn
 
   default_security_group_tags = {
     Name = "${lower(var.tag_name)}-default"
@@ -63,6 +62,14 @@ module "vpc" {
   public_subnet_tags = {
     Tier = "public"
   }
+
+  # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
+  # enable_flow_log                      = true
+  # create_flow_log_cloudwatch_log_group = true
+  # create_flow_log_cloudwatch_iam_role  = true
+  # flow_log_max_aggregation_interval    = 60
+  # flow_log_destination_type            = "s3"
+  # flow_log_destination_arn             = s3_bucket.this_s3_bucket_arn
 
   # vpc_flow_log_tags = {
   #   Name = lower(var.tag_name)

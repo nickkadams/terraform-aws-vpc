@@ -1,8 +1,3 @@
-provider "aws" {
-  profile = var.aws_profile
-  region  = var.aws_region
-}
-
 data "aws_availability_zones" "available" {}
 
 data "aws_caller_identity" "current" {}
@@ -63,17 +58,6 @@ module "vpc" {
   # flow_log_destination_type            = "s3"
   # flow_log_destination_arn             = s3_bucket.this_s3_bucket_arn
 
-  tags = {
-    Environment     = var.tag_env
-    Contact         = var.tag_cont
-    Cost            = var.tag_cost
-    Customer        = var.tag_cust
-    Project         = var.tag_proj
-    Confidentiality = var.tag_conf
-    Compliance      = var.tag_comp
-    Terraform       = "true"
-  }
-
   default_security_group_tags = {
     Name = "${lower(var.tag_name)}-default"
   }
@@ -92,7 +76,7 @@ module "vpc" {
 
   # vpc_flow_log_tags = {
   #   Name = lower(var.tag_name)
-  # }  
+  # }
 }
 
 resource "aws_db_subnet_group" "this" {
@@ -101,15 +85,7 @@ resource "aws_db_subnet_group" "this" {
   # subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
 
   tags = {
-    Environment     = var.tag_env
-    Contact         = var.tag_cont
-    Cost            = var.tag_cost
-    Customer        = var.tag_cust
-    Project         = var.tag_proj
-    Confidentiality = var.tag_conf
-    Compliance      = var.tag_comp
-    Terraform       = "true"
-    Tier            = "private"
+    Tier = "private"
   }
 }
 
@@ -117,15 +93,4 @@ resource "aws_elasticache_subnet_group" "this" {
   name       = lower(var.tag_name)
   subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]]
   # subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
-
-  # tags = {
-  #   Environment     = var.tag_env
-  #   Contact         = var.tag_cont
-  #   Cost            = var.tag_cost
-  #   Customer        = var.tag_cust
-  #   Project         = var.tag_proj
-  #   Confidentiality = var.tag_conf
-  #   Compliance      = var.tag_comp
-  #   Terraform       = "true"
-  # }
 }

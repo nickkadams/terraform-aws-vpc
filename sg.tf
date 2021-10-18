@@ -20,14 +20,6 @@ module "sg" {
   egress_rules            = ["all-all"]
 
   tags = {
-    Environment     = var.tag_env
-    Contact         = var.tag_cont
-    Cost            = var.tag_cost
-    Customer        = var.tag_cust
-    Project         = var.tag_proj
-    Confidentiality = var.tag_conf
-    Compliance      = var.tag_comp
-    Terraform       = "true"
-    Packer          = "true"
+    Packer = "true"
   }
 }

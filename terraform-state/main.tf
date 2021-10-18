@@ -20,17 +20,6 @@ resource "aws_s3_bucket" "terraform_state" {
     enabled = true
   }
 
-  tags = {
-    Environment     = var.tag_env
-    Contact         = var.tag_cont
-    Cost            = var.tag_cost
-    Customer        = var.tag_cust
-    Project         = var.tag_proj
-    Confidentiality = var.tag_conf
-    Compliance      = var.tag_comp
-    Terraform       = "true"
-  }
-
   # Prevent accidental deletion of this S3 bucket
   lifecycle {
     prevent_destroy = false # true
@@ -64,16 +53,5 @@ resource "aws_dynamodb_table" "terraform_locks" {
   attribute {
     name = "LockID"
     type = "S"
-  }
-
-  tags = {
-    Environment     = var.tag_env
-    Contact         = var.tag_cont
-    Cost            = var.tag_cost
-    Customer        = var.tag_cust
-    Project         = var.tag_proj
-    Confidentiality = var.tag_conf
-    Compliance      = var.tag_comp
-    Terraform       = "true"
   }
 }

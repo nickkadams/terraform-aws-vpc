@@ -41,18 +41,7 @@ resource "aws_s3_bucket" "trail" {
         }
     ]
 }
-POLICY  
-
-  tags = {
-    Environment     = var.tag_env
-    Contact         = var.tag_cont
-    Cost            = var.tag_cost
-    Customer        = var.tag_cust
-    Project         = var.tag_proj
-    Confidentiality = var.tag_conf
-    Compliance      = var.tag_comp
-    Terraform       = "true"
-  }
+POLICY
 
   # Prevent accidental deletion of this S3 bucket
   lifecycle {

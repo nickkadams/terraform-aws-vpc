@@ -44,7 +44,7 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 |------|---------|
 | terraform | >= 1.0|
 | aws | >= 3.63 |
-| vpc | >= 2.78 |
+| vpc | >= 3.10 |
 | security-group | >= 4.4 |
 
 ## Providers
@@ -57,7 +57,7 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 
 | Name | Version |
 |------|---------|
-| vpc | >= 2.78 |
+| vpc | >= 3.10 |
 | security-group | >= 4.4 |
 
 ## Inputs

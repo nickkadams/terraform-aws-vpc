@@ -4,7 +4,7 @@ data "aws_caller_identity" "current" {}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 2.78.0"
+  version = "~> 3.10.0"
 
   name = lower(var.tag_name)
 
@@ -39,12 +39,6 @@ module "vpc" {
   dhcp_options_domain_name         = var.domain_name
   dhcp_options_domain_name_servers = ["AmazonProvidedDNS"]
 
-  # Gateway endpoint for S3
-  enable_s3_endpoint = true
-
-  # Gateway endpoint for DynamoDB
-  enable_dynamodb_endpoint = true
-
   # Default security group - ingress/egress rules cleared to deny all
   manage_default_security_group  = true
   default_security_group_ingress = []
@@ -70,13 +64,71 @@ module "vpc" {
     Tier = "public"
   }
 
-  vpc_endpoint_tags = {
-    Name = lower(var.tag_name)
-  }
-
   # vpc_flow_log_tags = {
   #   Name = lower(var.tag_name)
   # }
+}
+
+data "aws_security_group" "default" {
+  name   = "default"
+  vpc_id = module.vpc.vpc_id
+}
+
+data "aws_vpc_endpoint_service" "dynamodb" {
+  service = "dynamodb"
+
+  filter {
+    name   = "service-type"
+    values = ["Gateway"]
+  }
+}
+
+data "aws_iam_policy_document" "dynamodb_endpoint_policy" {
+  statement {
+    effect    = "Deny"
+    actions   = ["dynamodb:*"]
+    resources = ["*"]
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    condition {
+      test     = "StringNotEquals"
+      variable = "aws:sourceVpce"
+
+      values = [data.aws_vpc_endpoint_service.dynamodb.id]
+    }
+  }
+}
+
+module "vpc_endpoints" {
+  source = "terraform-aws-modules/vpc/aws//modules/vpc-endpoints"
+
+  vpc_id             = module.vpc.vpc_id
+  security_group_ids = [data.aws_security_group.default.id]
+
+  endpoints = {
+    s3 = {
+      service      = "s3"
+      service_type = "Gateway"
+
+      tags = {
+        Name = lower(var.tag_name)
+      }
+    },
+    dynamodb = {
+      service         = "dynamodb"
+      service_type    = "Gateway"
+      route_table_ids = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
+      policy          = data.aws_iam_policy_document.dynamodb_endpoint_policy.json
+
+      tags = {
+        Name = lower(var.tag_name)
+      }
+    }
+  }
 }
 
 resource "aws_db_subnet_group" "this" {

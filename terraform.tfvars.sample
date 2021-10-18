@@ -1,3 +1,1 @@
 domain_name = "project.dev.internal"
-
-s3_prefix = "project"

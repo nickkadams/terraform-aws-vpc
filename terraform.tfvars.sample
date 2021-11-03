@@ -1,1 +1,3 @@
-domain_name = "project.sandbox.internal"
+tag_name = "sandbox"
+
+domain_name = "sandbox.internal"

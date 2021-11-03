@@ -24,6 +24,8 @@ repos:
     hooks:
       - id: terraform_fmt
       - id: terraform_validate
+      - id: terraform_tfsec
+        files: ^.terraform/modules/sg/
 
   -
     repo: https://github.com/igorshubovych/markdownlint-cli

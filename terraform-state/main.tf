@@ -1,10 +1,9 @@
-provider "aws" {
-  profile = var.aws_profile
-  region  = var.aws_region
-}
+data "aws_availability_zones" "available" {}
+
+data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "${lower(var.s3_prefix)}-${lower(var.tag_env)}-terraform-state"
+  bucket = "terraform-state-${data.aws_caller_identity.current.account_id}-${var.aws_region}-${lower(var.tag_env)}"
 
   server_side_encryption_configuration {
     rule {
@@ -41,7 +40,7 @@ resource "aws_s3_bucket_public_access_block" "terraform_state" {
 # }
 
 resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "${lower(var.s3_prefix)}-locks"
+  name         = "terraform_locks_${lower(var.tag_env)}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 

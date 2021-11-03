@@ -34,7 +34,7 @@ variable "tag_name" {
 }
 
 variable "tag_env" {
-  default     = "dev"
+  default     = "sandbox"
   description = "Tag: Environment"
   type        = string
 }

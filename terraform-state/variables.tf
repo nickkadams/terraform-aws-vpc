@@ -10,11 +10,6 @@ variable "aws_region" {
   type        = string
 }
 
-variable "s3_prefix" {
-  description = "S3 bucket prefix (project or customer?)"
-  type        = string
-}
-
 variable "kms_master_key_id" {
   default     = "alias/aws/s3"
   description = "KMS master key ID"
@@ -22,7 +17,7 @@ variable "kms_master_key_id" {
 }
 
 variable "tag_env" {
-  default     = "dev"
+  default     = "sandbox"
   description = "Tag: Environment"
   type        = string
 }

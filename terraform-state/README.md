@@ -38,12 +38,6 @@ Note that this example may create resources which can cost money (AWS S3, AWS Dy
 |------|---------|
 | aws | >= 3.63 |
 
-## Inputs
-
-| Name | Description |
-|------|-------------|
-| s3\_prefix | S3 bucket prefix (project or customer?) |
-
 ## Outputs
 
 | Name | Description |

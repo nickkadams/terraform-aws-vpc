@@ -1,5 +1,5 @@
 # backend.hcl
-bucket         = "project-dev-terraform-state"
+bucket         = "terraform-state-111111111111-us-east-1-sandbox"
 region         = "us-east-1"
-dynamodb_table = "project-locks"
+dynamodb_table = "terraform_locks_sandbox"
 encrypt        = true

@@ -44,7 +44,7 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 |------|---------|
 | terraform | >= 1.0|
 | aws | >= 3.63 |
-| vpc | >= 3.10 |
+| vpc | >= 3.11|
 | security-group | >= 4.4 |
 
 ## Providers
@@ -57,7 +57,7 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 
 | Name | Version |
 |------|---------|
-| vpc | >= 3.10 |
+| vpc | >= 3.11|
 | security-group | >= 4.4 |
 
 ## Inputs
@@ -80,7 +80,7 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 | rds\_subnet\_group | The RDS DB subnet group |
 | ec\_subnet\_group | The ElastiCache subnet group |
 | mgmt\_security\_group | The management security group |
-| bastion\_eips | List of IDs of elastic IPs |
+| jumphost\_eips | List of IDs of elastic IPs |
 | domain\_name | The Route 53 domain name |
 
 ## Authors

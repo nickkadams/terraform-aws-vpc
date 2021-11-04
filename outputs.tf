@@ -60,9 +60,9 @@ output "mgmt_security_group" {
 }
 
 # EIP(s)
-output "bastion_eips" {
+output "jumphost_eips" {
   description = "List of IDs of elastic IPs"
-  value       = [aws_eip.bastion[*].id]
+  value       = [aws_eip.jumphost[*].id]
 }
 
 # Domain name

@@ -152,4 +152,8 @@ resource "aws_elasticache_subnet_group" "this" {
   name       = lower(var.tag_name)
   subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]]
   # subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
+
+  tags = {
+    Tier = "private"
+  }
 }

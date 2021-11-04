@@ -80,7 +80,7 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 | rds\_subnet\_group | The RDS DB subnet group |
 | ec\_subnet\_group | The ElastiCache subnet group |
 | mgmt\_security\_group | The management security group |
-| jumphost\_eips | List of IDs of elastic IPs |
+| jumphost\_eips | List of elastic IPs |
 | domain\_name | The Route 53 domain name |
 
 ## Authors

@@ -30,6 +30,7 @@ Terraform 1.0 and newer.
 To run this example you need to execute:
 
 ```bash
+pre-commit install
 cp terraform.tfvars.sample terraform.tfvars
 terraform init
 terraform plan

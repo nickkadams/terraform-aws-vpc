@@ -59,7 +59,7 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 | Name | Version |
 |------|---------|
 | vpc | >= 3.12 |
-| security-group | >= 4.4 |
+| security-group | >= 4.8 |
 
 ## Inputs
 

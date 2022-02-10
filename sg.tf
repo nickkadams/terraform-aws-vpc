@@ -5,7 +5,7 @@ data "http" "icanhazip" {
 
 module "sg" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 4.4.0"
+  version = "~> 4.8.0"
 
   name            = "mgmt"
   use_name_prefix = false

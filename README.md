@@ -23,7 +23,7 @@ These types of resources are created by default:
 
 ## Terraform versions
 
-Terraform 1.0 and newer.
+Terraform 1.1 and newer.
 
 ## Usage
 
@@ -43,22 +43,22 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 
 | Name | Version |
 |------|---------|
-| terraform | >= 1.0|
-| aws | >= 3.64 |
-| vpc | >= 3.11|
-| security-group | >= 4.4 |
+| terraform | >= 1.1 |
+| aws | >= 3.74 |
+| vpc | >= 3.12 |
+| security-group | >= 4.8 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.64 |
+| aws | >= 3.74 |
 
 ## Modules
 
 | Name | Version |
 |------|---------|
-| vpc | >= 3.11|
+| vpc | >= 3.12 |
 | security-group | >= 4.4 |
 
 ## Inputs

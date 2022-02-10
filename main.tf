@@ -4,7 +4,7 @@ data "aws_caller_identity" "current" {}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.11.0"
+  version = "~> 3.12"
 
   name = lower(var.tag_name)
 

@@ -44,21 +44,21 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 | Name | Version |
 |------|---------|
 | terraform | >= 1.1 |
-| aws | >= 3.74 |
-| vpc | >= 3.12 |
+| aws | >= 3.75 |
+| vpc | >= 3.13 |
 | security-group | >= 4.8 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.74 |
+| aws | >= 3.75 |
 
 ## Modules
 
 | Name | Version |
 |------|---------|
-| vpc | >= 3.12 |
+| vpc | >= 3.13 |
 | security-group | >= 4.8 |
 
 ## Inputs

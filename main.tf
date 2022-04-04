@@ -1,10 +1,14 @@
-data "aws_availability_zones" "available" {}
+# https://wolfman.dev/posts/exclude-use1-az3/
+data "aws_availability_zones" "available" {
+  state            = "available"
+  exclude_zone_ids = ["use1-az3"]
+}
 
 data "aws_caller_identity" "current" {}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.12"
+  version = "~> 3.13"
 
   name = lower(var.tag_name)
 

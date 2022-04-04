@@ -31,13 +31,13 @@ Note that this example may create resources which can cost money (AWS S3, AWS Dy
 | Name | Version |
 |------|---------|
 | terraform | >= 1.1 |
-| aws | >= 3.74 |
+| aws | >= 3.75 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.74 |
+| aws | >= 3.75 |
 
 ## Outputs
 

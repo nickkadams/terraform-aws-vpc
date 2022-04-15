@@ -5,23 +5,27 @@ data "aws_caller_identity" "current" {}
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "terraform-state-${data.aws_caller_identity.current.account_id}-${var.aws_region}-${lower(var.tag_env)}"
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm     = "aws:kms" # "AES256"
-        kms_master_key_id = var.kms_master_key_id
-      }
-    }
-  }
-
-  # Enable versioning for history of state files
-  versioning {
-    enabled = true
-  }
-
   # Prevent accidental deletion of this S3 bucket
   lifecycle {
     prevent_destroy = false # true
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" {
+  bucket = aws_s3_bucket.terraform_state.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = var.kms_master_key_id
+      sse_algorithm     = "aws:kms" # "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_versioning" "terraform_state" {
+  bucket = aws_s3_bucket.terraform_state.id
+  versioning_configuration {
+    status = "Enabled"
   }
 }
 

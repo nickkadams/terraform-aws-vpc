@@ -15,25 +15,27 @@ module "vpc" {
   cidr = var.aws_network
 
   # 3-AZs
-  azs             = [data.aws_availability_zones.available.names[0], data.aws_availability_zones.available.names[1], data.aws_availability_zones.available.names[2]]
-  public_subnets  = [cidrsubnet(var.aws_network, 3, 0), cidrsubnet(var.aws_network, 3, 2), cidrsubnet(var.aws_network, 3, 4)]
-  private_subnets = [cidrsubnet(var.aws_network, 3, 1), cidrsubnet(var.aws_network, 3, 3), cidrsubnet(var.aws_network, 3, 5)]
+  # ipcalc 172.30.0.0/16 --split 14 14 14 14 14 14 4094 4094 4094 16382 16382 16382
+  azs              = [data.aws_availability_zones.available.names[0], data.aws_availability_zones.available.names[1], data.aws_availability_zones.available.names[2]]
+  public_subnets   = [cidrsubnet(var.aws_network, 4, 12), cidrsubnet(var.aws_network, 4, 13), cidrsubnet(var.aws_network, 4, 14)]
+  private_subnets  = [cidrsubnet(var.aws_network, 2, 0), cidrsubnet(var.aws_network, 2, 1), cidrsubnet(var.aws_network, 2, 2)]
+  intra_subnets    = [cidrsubnet(var.aws_network, 12, 3840), cidrsubnet(var.aws_network, 12, 3841), cidrsubnet(var.aws_network, 12, 3842)]
+  database_subnets = [cidrsubnet(var.aws_network, 12, 3843), cidrsubnet(var.aws_network, 12, 3844), cidrsubnet(var.aws_network, 12, 3845)]
 
-  # 2-AZs
-  # azs             = [data.aws_availability_zones.available.names[0], data.aws_availability_zones.available.names[1]]
-  # public_subnets  = [cidrsubnet(var.aws_network, 2, 0), cidrsubnet(var.aws_network, 2, 2)]
-  # private_subnets = [cidrsubnet(var.aws_network, 2, 1), cidrsubnet(var.aws_network, 2, 3)]
+  # Intra
+  intra_subnet_suffix = "tgw"
 
-  # Disable public IP by default
-  map_public_ip_on_launch = false
+  # Database
+  create_database_subnet_group       = false
+  create_database_subnet_route_table = false
+  database_subnet_suffix             = "eks"
 
-  # IPv6
-  enable_ipv6                     = false
-  assign_ipv6_address_on_creation = false
+  # https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html#vpc-cidr
+  map_public_ip_on_launch = true
 
   # NAT/VPN
   enable_nat_gateway = true
-  single_nat_gateway = true
+  single_nat_gateway = false
   enable_vpn_gateway = false
 
   # DNS options

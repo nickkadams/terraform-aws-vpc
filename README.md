@@ -44,7 +44,7 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 | Name | Version |
 |------|---------|
 | terraform | >= 1.1 |
-| aws | >= 3.75 |
+| aws | >= 4.10 |
 | vpc | >= 3.13 |
 | security-group | >= 4.8 |
 
@@ -52,7 +52,7 @@ Note that this example may create resources which can cost money (AWS Elastic IP
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.75 |
+| aws | >= 4.10 |
 
 ## Modules
 

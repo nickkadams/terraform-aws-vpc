@@ -1,3 +1,7 @@
+aws_profile = "dev"
+
+aws_region = "us-gov-east-1"
+
 tag_name = "sandbox"
 
 domain_name = "sandbox.internal"

@@ -1,41 +1,51 @@
+locals {
+  name = lower(replace(var.tag_name, ".", "-"))
+}
+
 # https://wolfman.dev/posts/exclude-use1-az3/
+# https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html#network-requirements-subnets
 data "aws_availability_zones" "available" {
-  state            = "available"
-  exclude_zone_ids = ["use1-az3"]
+  state = "available"
+  #exclude_zone_ids = ["use1-az3", "usw1-az2", "cac1-az3"]
 }
 
 data "aws_caller_identity" "current" {}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.13"
+  version = "~> 5.5.3"
 
-  name = lower(var.tag_name)
+  name = local.name
 
   cidr = var.aws_network
 
   # 3-AZs
-  # ipcalc 172.30.0.0/16 --split 14 14 14 14 14 14 4094 4094 4094 16382 16382 16382
-  azs              = [data.aws_availability_zones.available.names[0], data.aws_availability_zones.available.names[1], data.aws_availability_zones.available.names[2]]
-  public_subnets   = [cidrsubnet(var.aws_network, 4, 12), cidrsubnet(var.aws_network, 4, 13), cidrsubnet(var.aws_network, 4, 14)]
-  private_subnets  = [cidrsubnet(var.aws_network, 2, 0), cidrsubnet(var.aws_network, 2, 1), cidrsubnet(var.aws_network, 2, 2)]
-  intra_subnets    = [cidrsubnet(var.aws_network, 12, 3840), cidrsubnet(var.aws_network, 12, 3841), cidrsubnet(var.aws_network, 12, 3842)]
-  database_subnets = [cidrsubnet(var.aws_network, 12, 3843), cidrsubnet(var.aws_network, 12, 3844), cidrsubnet(var.aws_network, 12, 3845)]
+  # ipcalc 172.18.0.0/16 --split 14 14 14 14 14 14 4094 4094 4094 16382 16382 16382
+  azs                 = [data.aws_availability_zones.available.names[0], data.aws_availability_zones.available.names[1], data.aws_availability_zones.available.names[2]]
+  public_subnets      = [cidrsubnet(var.aws_network, 4, 12), cidrsubnet(var.aws_network, 4, 13), cidrsubnet(var.aws_network, 4, 14)]
+  private_subnets     = [cidrsubnet(var.aws_network, 2, 0), cidrsubnet(var.aws_network, 2, 1), cidrsubnet(var.aws_network, 2, 2)]
+  intra_subnets       = [cidrsubnet(var.aws_network, 12, 3843), cidrsubnet(var.aws_network, 12, 3844), cidrsubnet(var.aws_network, 12, 3845)]
+  elasticache_subnets = [cidrsubnet(var.aws_network, 12, 3840), cidrsubnet(var.aws_network, 12, 3841), cidrsubnet(var.aws_network, 12, 3842)]
 
   # Intra
   intra_subnet_suffix = "tgw"
 
-  # Database
-  create_database_subnet_group       = false
-  create_database_subnet_route_table = false
-  database_subnet_suffix             = "eks"
+  # Elasticache
+  elasticache_subnet_suffix             = "eks"
+  create_elasticache_subnet_group       = false
+  create_elasticache_subnet_route_table = true
+
+  # ACLs
+  public_dedicated_network_acl  = true
+  private_dedicated_network_acl = false
+  intra_dedicated_network_acl   = true
 
   # https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html#vpc-cidr
   map_public_ip_on_launch = true
 
   # NAT/VPN
   enable_nat_gateway = true
-  single_nat_gateway = false
+  single_nat_gateway = true
   enable_vpn_gateway = false
 
   # DNS options
@@ -49,7 +59,7 @@ module "vpc" {
   manage_default_route_table = true
 
   default_route_table_tags = {
-    Name = "${lower(var.tag_name)}-default"
+    Name = "${local.name}-default"
   }
 
   # Default security group - ingress/egress rules cleared to deny all
@@ -58,15 +68,19 @@ module "vpc" {
   default_security_group_egress  = []
 
   default_security_group_tags = {
-    Name = "${lower(var.tag_name)}-default"
+    Name = "${local.name}-default"
   }
 
   private_subnet_tags = {
-    Tier = "private"
+    Tier                              = "private"
+    "kubernetes.io/role/internal-elb" = 1
+    # Tag subnets for Karpenter auto-discovery
+    "karpenter.sh/discovery" = local.name
   }
 
   public_subnet_tags = {
-    Tier = "public"
+    Tier                     = "public"
+    "kubernetes.io/role/elb" = 1
   }
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
@@ -141,25 +155,5 @@ module "vpc_endpoints" {
         Name = lower(var.tag_name)
       }
     }
-  }
-}
-
-resource "aws_db_subnet_group" "this" {
-  name       = lower(var.tag_name)
-  subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]]
-  # subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
-
-  tags = {
-    Tier = "private"
-  }
-}
-
-resource "aws_elasticache_subnet_group" "this" {
-  name       = lower(var.tag_name)
-  subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]]
-  # subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1]]
-
-  tags = {
-    Tier = "private"
   }
 }

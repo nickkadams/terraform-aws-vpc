@@ -41,17 +41,17 @@ output "public_subnets" {
   value       = [module.vpc.public_subnets]
 }
 
-# Database
-output "rds_subnet_group" {
-  description = "The RDS DB subnet group"
-  value       = aws_db_subnet_group.this.id
-}
+# # Database
+# output "rds_subnet_group" {
+#   description = "The RDS DB subnet group"
+#   value       = aws_db_subnet_group.this.id
+# }
 
-# ElastiCache
-output "ec_subnet_group" {
-  description = "The ElastiCache subnet group"
-  value       = aws_elasticache_subnet_group.this.id
-}
+# # ElastiCache
+# output "ec_subnet_group" {
+#   description = "The ElastiCache subnet group"
+#   value       = aws_elasticache_subnet_group.this.id
+# }
 
 # Mgmt
 output "mgmt_security_group" {
